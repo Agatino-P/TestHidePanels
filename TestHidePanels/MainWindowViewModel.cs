@@ -45,7 +45,7 @@ namespace TestHidePanels
 
         private RelayCommand _populate2Cmd;
         public RelayCommand Populate2Cmd => _populate2Cmd ?? (_populate2Cmd = new RelayCommand(
-                () => { OC2.Add("str1"); RaisePropertyChanged("OC2Visible"); },
+                () => { OC2.Add("str2"); RaisePropertyChanged("OC2Visible"); },
             () => { return 1 == 1; },
             keepTargetAlive: true
             ));

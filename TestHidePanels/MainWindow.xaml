@@ -7,7 +7,7 @@
         Title="MainWindow" Width="800" Height="450"
         d:DataContext="{d:DesignInstance Type={x:Type local:MainWindowViewModel},
                                          IsDesignTimeCreatable=True}"
-        SizeToContent="Height" mc:Ignorable="d">
+        mc:Ignorable="d"  Name="mw" ResizeMode="NoResize">
     <Window.DataContext>
         <local:MainWindowViewModel />
     </Window.DataContext>
@@ -19,62 +19,77 @@
             <Setter Property="Width" Value="400" />
         </Style>
     </Window.Resources>
-    <DockPanel x:Name="mdp">
+    <Grid HorizontalAlignment="Center" ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition>
+                <ColumnDefinition.Style>
+                    <Style TargetType="ColumnDefinition">
+                        <Setter Property="Width" Value="0" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OC1Visible}" Value="true">
+                                <Setter Property="Width" Value="*" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding OC2Visible}" Value="true">
+                                <Setter Property="Width" Value="*" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ColumnDefinition.Style>
+            </ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
 
         <Border BorderBrush="Green" BorderThickness="4">
-            <DockPanel Width="{Binding ElementName=mdp, Path=ActualWidth}" HorizontalAlignment="Center">
-
-
-                <StackPanel>
-                    <Button Command="{Binding Empty1Cmd}"
-                            Content="Empty 1" DockPanel.Dock="Top" />
-                    <Button Command="{Binding Populate1Cmd}"
-                            Content="Populate 1" DockPanel.Dock="Top" />
-                    <Button Command="{Binding Empty2Cmd}"
-                            Content="Empty 2" DockPanel.Dock="Top" />
-                    <Button Command="{Binding Populate2Cmd}"
-                            Content="Populate 2" DockPanel.Dock="Top" />
-                    <Button Command="{Binding TestCmd}"
-                            Content="Test" DockPanel.Dock="Top" />
-                </StackPanel>
-
-
-                <DockPanel HorizontalAlignment="Stretch">
-                    <DockPanel.Style>
-                        <Style TargetType="DockPanel">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding OC1Visible}" Value="true">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding OC2Visible}" Value="true">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DockPanel.Style>
-                    <DockPanel Background="Green" DockPanel.Dock="Top"
-                               Visibility="{Binding OC1Visible, Converter={StaticResource BVC1}}">
-                        <TextBlock DockPanel.Dock="Top" Text="DG1" />
-                        <DataGrid ItemsSource="{Binding OC1}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding}" Header="oc1" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </DockPanel>
-
-                    <DockPanel Background="Crimson" Visibility="{Binding OC2Visible, Converter={StaticResource BVC2}}">
-                        <TextBlock DockPanel.Dock="Top" Text="DG22" />
-                        <DataGrid ItemsSource="{Binding OC2}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding}" Header="oc2" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </DockPanel>
-
-                </DockPanel>
-
-            </DockPanel>
+            <StackPanel x:Name="sp">
+                <Button Command="{Binding Empty1Cmd}"
+                        Content="Empty 1" DockPanel.Dock="Top" />
+                <Button Command="{Binding Populate1Cmd}"
+                        Content="Populate 1" DockPanel.Dock="Top" />
+                <Button Command="{Binding Empty2Cmd}"
+                        Content="Empty 2" DockPanel.Dock="Top" />
+                <Button Command="{Binding Populate2Cmd}"
+                        Content="Populate 2" DockPanel.Dock="Top" />
+                <Button Command="{Binding TestCmd}"
+                        Content="Test" DockPanel.Dock="Top" />
+            </StackPanel>
         </Border>
-    </DockPanel>
+
+        <DockPanel Grid.Column="1" HorizontalAlignment="Stretch" Height="{Binding ElementName=mw, Path=ActualHeight}">
+            <DockPanel.Style>
+                <Style TargetType="DockPanel">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding OC1Visible}" Value="true">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding OC2Visible}" Value="true">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DockPanel.Style>
+            <Button Content="1" DockPanel.Dock="Bottom" Height="0" HorizontalAlignment="Stretch"/>
+            <DockPanel Background="Green" DockPanel.Dock="Top"
+                       Visibility="{Binding OC1Visible, Converter={StaticResource BVC1}}">
+                <TextBlock DockPanel.Dock="Top" Text="DG1" />
+                <DataGrid ItemsSource="{Binding OC1}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding}" Header="oc1" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+
+            <DockPanel Background="Crimson" Visibility="{Binding OC2Visible, Converter={StaticResource BVC2}}">
+                <TextBlock DockPanel.Dock="Top" Text="DG22" />
+                <DataGrid ItemsSource="{Binding OC2}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding}" Header="oc2" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+
+        </DockPanel>
+
+    </Grid>
 </Window>
