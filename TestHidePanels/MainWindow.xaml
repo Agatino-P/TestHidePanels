@@ -19,10 +19,11 @@
             <Setter Property="Width" Value="400" />
         </Style>
     </Window.Resources>
-    <DockPanel>
+    <DockPanel x:Name="mdp">
 
         <Border BorderBrush="Green" BorderThickness="4">
-            <WrapPanel>
+            <DockPanel Width="{Binding ElementName=mdp, Path=ActualWidth}" HorizontalAlignment="Center">
+
 
                 <StackPanel>
                     <Button Command="{Binding Empty1Cmd}"
@@ -73,7 +74,7 @@
 
                 </DockPanel>
 
-            </WrapPanel>
+            </DockPanel>
         </Border>
     </DockPanel>
 </Window>

@@ -8,7 +8,6 @@ namespace TestHidePanels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-
         private ObservableCollection<string> _oc1 = new ObservableCollection<string>();
         public ObservableCollection<string> OC1 { get => _oc1; set => Set(() => OC1, ref _oc1, value); }
         public bool OC1Visible => OC1.Count() > 0;
